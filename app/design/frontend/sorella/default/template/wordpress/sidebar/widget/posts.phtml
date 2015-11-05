@@ -1,0 +1,32 @@
+<?php
+/**
+ * @category    Fishpig
+ * @package     Fishpig_Wordpress
+ * @license     http://fishpig.co.uk/license.txt
+ * @author      Ben Tideswell <help@fishpig.co.uk>
+ */
+?>
+<?php $posts = $this->getPosts() ?>
+<?php if (count($posts) > 0): ?>
+	<div class="widget widget-recent-posts">
+		<?php if ($title = $this->getTitle()): ?>
+			<div class="widget-title"><h2><?php echo $this->__($title) ?></h2></div>
+		<?php endif; ?>
+		<div class="widget-blogs">
+			<ul id="<?php echo $this->getListId() ?>">
+			<?php foreach($posts as $post): ?>
+				<li class="item">
+                    <img src="<? echo $post->getFeaturedImage()->getAvailableImage(); ?>" class="col-md-2" style="margin:0;padding:0;"/>
+                    <span  class="col-md-10">
+					   <a href="<?php echo $post->getPermalink() ?>" title="<?php echo $this->htmlEscape($post->getPostTitle()) ?>" class="blog-title"><?php echo $this->htmlEscape($post->getPostTitle()) ?></a>
+                        <? echo substr($post->getPostContent(), 0, 100); ?>...<br />
+                        <a href="<?php echo $post->getPermalink() ?>">Read More...</a>
+                    </span>
+                    <div class="clear"></div>
+				</li>
+			<?php endforeach; ?>
+			</ul>
+			<script type="text/javascript">decorateList('<?php echo $this->getListId() ?>')</script>
+		</div>
+	</div>
+<?php endif; ?>

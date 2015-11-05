@@ -1,0 +1,25 @@
+<?php
+$category = Mage::getSingleton('catalog/layer')->getCurrentCategory();
+$categories = $category->getCollection()
+        ->addAttributeToSelect(array('name', 'image'))
+        ->addAttributeToFilter('is_active', 1)
+        ->addIdFilter($category->getChildren())
+?>
+<div class="category-products">
+	<ul class="products-grid row container first odd">
+	    <?php foreach ($categories as $category): ?>
+	        <li class="col-xs-4 first item">
+	            <a href="<?php echo $category->getUrl() ?>" class="category">
+	            	<?php
+	            	$categoryImg = $category->getImageUrl();
+	            	if( empty( $categoryImg ) ) { ?>
+	            		<img src="/media/catalog/category/cat_test.png" alt="<?php echo $this->htmlEscape($category->getName()) ?>" />
+	            	<?php } else { ?>
+	            		<img src="<?php echo $category->getImageUrl() ?>" alt="<?php echo $this->htmlEscape($category->getName()) ?>" />
+	            	<?php } ?>
+	                	<h3 class="product-name"><?php echo $category->getName() ?></h3>
+	                </a>
+	        </li>
+	    <?php endforeach; ?>
+	</ul>
+</div>
